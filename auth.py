@@ -22,7 +22,6 @@ def register():
 
 @auth_bp.route("/test-register")
 def test_register():
-    from werkzeug.security import generate_password_hash
     from models import create_user
 
     create_user("testuser", generate_password_hash("1234"))
