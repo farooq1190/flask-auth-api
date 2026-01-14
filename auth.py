@@ -43,6 +43,26 @@ def login():
     token = generate_token(user["username"])
     return jsonify({"token": token}), 200
 
+@auth_bp.route("/api/profile", methods=["GET"])
+def profile():
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return jsonify({"error": "missing token"}), 401
+    
+    token = auth_header.split(" ")[1]
+    payload = verify_token(token)
+    
+    if not payload:
+        return jsonify({"error": "invalid or expired token"}), 401
+    
+    user = get_user_by_username(payload["username"])
+    if not user:
+        return jsonify({"error": "user not found"}), 404
+    
+    return jsonify({
+        "username": user["username"]
+        }), 200
+
 @auth_bp.route("/test-login")
 def test_login():
     from models import get_user_by_username
