@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from dotenv import load_dotenv
-import flask
 from config import SECRET_KEY
 from auth import auth_bp
 

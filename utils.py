@@ -6,7 +6,7 @@ from config import JWT_SECRET, JWT_ALGORITHM
 def generate_token(username):
     payload = {
         'username': username,
-        'exp': datetime.datetime.utcnow() + timedelta(hours=1)
+        'exp': datetime.utcnow() + timedelta(hours=1)
     }
 
     return jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")

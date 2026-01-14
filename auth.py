@@ -20,13 +20,6 @@ def register():
 
     return jsonify({"message": "user created successfully"}), 201
 
-@auth_bp.route("/test-register")
-def test_register():
-    from models import create_user
-
-    create_user("testuser", generate_password_hash("1234"))
-    return {"message": "Test user created"}
-
 
 @auth_bp.route("/api/login", methods=["POST"])
 def login():
@@ -62,16 +55,4 @@ def profile():
     return jsonify({
         "username": user["username"]
         }), 200
-
-@auth_bp.route("/test-login")
-def test_login():
-    from models import get_user_by_username
-    from utils import generate_token
-
-    user = get_user_by_username("testuser")
-    if not user:
-        return {"error": "User not found"}
-
-    token = generate_token("testuser")
-    return {"token": token}
 
